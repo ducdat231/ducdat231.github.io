@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Marvel API Gudie</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<style>
+  body {background-color: maroon;}
+</style>
+
+<body>
+
+  <div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="home.html">Home</a></li>
+          <li><a href="page1.html">General InFormation</a></li>
+          <li><a href="page2.html">API Results &amp Entity Types</a></li>
+          <li><a href="page3.html">Authorization</a></li>
+          <li><a href="page4.html">Attribution &amp Rate Limits</a></li>
+          <li><a href="page5.html">Images</a></li>
+        </ul>
+      </div>
+    </nav>
+        <div class="jumbotron">
+
+          <h1><b>Result Structure</b></h1>
+            <p>The best way to quickly understand results returned by the Marvel Comics API is to test actual calls using the <b>interactive documentation</b>. The documentation presented here provides a deeper dive into API result structure and organization.</p>
+
+            <h2><b>Results</b></h2>
+              <p>Results returned by the API endpoints have the same general format, no matter which entity type the endpoint returns. Every successful call will return a <b>wrapper</b> object, which contains metadata about the call and a <b>container</b> object, which displays pagination information and an array of the results returned by this call. This pattern is consistent even if you are requesting a single object.</p>
+              <p>Wrappers for successful calls have the following format:</p>
+              <div>
+              <table class="table table-bordered table-condensed">
+                <tr class="danger">
+                  <th><b>attribure</b></th>
+                  <th><b>type</b></th>
+                  <th><b>discription</b></th>
+                </tr>
+                <tr>
+                  <td>code</td>
+                  <td>int</td>
+                  <td>The HTTP status code of the returned result</td>
+                </tr>
+                <tr>
+                  <td>status</td>
+                  <td>string</td>
+                  <td>A string description of the call status</td>
+                </tr>
+                <tr>
+                  <td>data</td>
+                  <td>A container</td>
+                  <td>The results returned by the call</td>
+                </tr>
+                <tr>
+                  <td>etag</td>
+                  <td>string</td>
+                  <td>A digest value of the content</td>
+                </tr>
+                <tr>
+                  <td>copyright</td>
+                  <td>string</td>
+                  <td>The copyright notice for the returned result</td>
+                </tr>
+                <tr>
+                  <td>attributionText</td>
+                  <td>string</td>
+                  <td>The attribution notice for this result</td>
+                </tr>
+                <tr>
+                  <td>attributionHTML</td>
+                  <td>string</td>
+                  <td>An HTML representation of the attribution notice for this result</td>
+                </tr>
+              </table>
+              </div>
+
+              <p>Containers have this format:</p>
+
+              <div>
+              <table class="table table-bordered table-condensed">
+                <tr class="danger">
+                  <th><b>attribure</b></th>
+                  <th><b>type</b></th>
+                  <th><b>discription</b></th>
+                </tr>
+                <tr>
+                  <td>offset</td>
+                  <td>int</td>
+                  <td>The requested offset (skipped results) of the call</td>
+                </tr>
+                <tr>
+                  <td>limit</td>
+                  <td>int</td>
+                  <td>The requested result limit</td>
+                </tr>
+                <tr>
+                  <td>total</td>
+                  <td>int</td>
+                  <td>The total number of results available</td>
+                </tr>
+                <tr>
+                  <td>count</td>
+                  <td>int</td>
+                  <td>The total number of results returned by this call</td>
+                </tr>
+                <tr>
+                  <td>results</td>
+                  <td>Array[entity type]</td>
+                  <td>The list of entities returned by the call</td>
+                </tr>
+              </table>
+              </div>
+
+              <p>Putting it together, a typical result will look like this:</p>
+              <img src="images/results.png" class="img-rounded" width="1000" height="350">
+
+            <h2><b>Errors</b></h2>
+            <p>If a call to an API endpoint fails, the API will return an error object with the following format:</p>
+              <div>
+              <table class="table table-bordered table-condensed">
+                <tr class="danger">
+                  <th><b>attribure</b></th>
+                  <th><b>type</b></th>
+                  <th><b>discription</b></th>
+                </tr>
+                <tr>
+                  <td>code</td>
+                  <td>int</td>
+                  <td>the http status code of the error</td>
+                </tr>
+                <tr>
+                  <td>limit</td>
+                  <td>int</td>
+                  <td>a description of the error</td>
+              </table>
+              </div>
+            <p>The API will also send an HTTP status code equal to the code attribute of the returned error object.</p>
+
+          <h1><b>Entity types and representations</b></h1>
+              <p>In addition to telling epic stories of misunderstood teenagers swinging between the skyscrapers of Manhattan, comics have a robust and complex data model and consist of several different entity types. Before we get into the specifics of the API results we'll explain what these entities are and how they relate to each other.</p>
+              <ol>
+                <li>Comic issues (or just <b>comics</b>) are the physical or digital products that end-users read. (The Marvel Comics API returns comic issues, collections, graphic novels and digital comics as part of the overall comics endpoint and entity type.)</li>
+                <li>Comics belong to a <b>series</b>, which is a (usually) sequentially number list of comics with the same title and volume. Marvel uses the year of original publication for a series as the volume number.</li>
+                <li>Comics can also be a part of an <b>event</b>, which is a big, universe-changing storyline. A comic's appearance in an event is often independent of its membership in a series.</li>
+                <li>Comics are made up of <b>stories</b>, which are indivisible components of comics. Most comics have two stories - a cover and an interior story - but many, such as anthology comics and collections, will have more. Stories may be re-published in several comics, but the comic in which they originally appeared will always be present as a data point.</li>
+                <li><b>Creators</b> are the people and entities that make comics. They are assigned to the specific comic stories on which they worked, but we bubble up those assignments to the issues, series and events in which the stories appear as a convenience.</li>
+                <li><b>Characters</b> are people and organizations which appear in comics. They are also assigned to stories initially and bubbled up to issues, series and events.</li>
+              </ol>
+              <p>(If you are interested in comics data structures and making comics more accessible generally, join Marvel in participating in the proposal process for <b>schema.org</b> and <b>Biblex</b> extensions for web schemas.)</p>
+              
+              <h2><b>Entity Representations</b></h2>
+                <p>Entities returned by the API will have two representations: a full view and a summary view. The full view is returned by requests to a resource endpoint, and summaries are returned when a resource is referenced by a full resource. For example, a call to the comics endpoint <b><a href="http://gateway.marvel.com/v1/public/comics">http://gateway.marvel.com/v1/public/comics</a></b> returns full views of comics and summaries of other entities such as creators which created the comic, characters which appear in it and the series in which the comic belongs.</p>
+                <p>We will explain the full representations of entities more in-depth below - they will vary from entity type to entity type.</p>
+                <p>Summary views will always contain a resourceURI, which points to the full representation of the referenced entity, and a name, for convenience. Some summary representations will additionally have a field describing its type or the relationship between the returned entity and the referenced entity.</p>
+                <p>You can expect that any result returned by an endpoint to have a full set of fields, but some fields may have empty values. For example, a string attribute may return an empty string or null, but the field will always be present in the returned representation.</p>
+                <p>Full schemas for each endpoint are also available in the interactive documentation.</p>
+
+              <h2><b>Common structures</b></h2>
+                <p>While each entity type returned by an endpoint has a distinct structure, many will have components which have a common structure.</p>
+                <h3><b>URLs</b></h3>
+                  <p>URLs are references to web pages or deep links into applications. (When present in a resultset, it is preferred that you use these to link back to Marvel.) Many resources will have more than one representation on the web so URLs are generally presented as an array of URL resources. URLs are modeled as follows:</p>
+                  <div>
+                  <table class="table table-bordered table-condensed">
+                    <tr class="danger">
+                      <th><b>attribure</b></th>
+                      <th><b>type</b></th>
+                      <th><b>discription</b></th>
+                    </tr>
+                    <tr>
+                      <td>type</td>
+                      <td>string</td>
+                      <td>A text identifier for the URL.</td>
+                    </tr>
+                    <tr>
+                      <td>url</td>
+                      <td>string</td>
+                      <td>A full URL (including scheme, domain, and path).</td>
+                    </tr>
+                  </table>
+                  </div>
+
+                <h3><b>Text Objects</b></h3>
+                  <p>Text objects are bits of descriptive text which are attached to an entity. They have the following properties:</p>
+                  <div>
+                  <table class="table table-bordered table-condensed">
+                    <tr class="danger">
+                      <th><b>attribure</b></th>
+                      <th><b>type</b></th>
+                      <th><b>discription</b></th>
+                    </tr>
+                    <tr>
+                      <td>type</td>
+                      <td>string</td>
+                      <td>The string description of the text object (e.g. solicit text, preview text, etc.).</td>
+                    </tr>
+                    <tr>
+                      <td>language</td>
+                      <td>string</td>
+                      <td>A language code denoting which language the text object is written in.</td>
+                    </tr>
+                    <tr>
+                      <td>text</td>
+                      <td>string</td>
+                      <td>The text of the text object.</td>
+                    </tr>
+                  </table>
+                  </div>
+
+                <h3><b>Resources URIs</b></h3>
+                  <p>Resource URIs are references to the representation of a resource within the API. Every resource and resource summary will have a resource URI attribute.</p>
+
+                <h3><b>Resources Lists</b></h3>
+                  <p>Resource lists are collections of summary views within the context of another entity type. For example, the list of creators attached to a comic would be presented as resource list inside the full representation of that comic. Resource lists have the following format:</p>
+                  <div>
+                  <table class="table table-bordered table-condensed">
+                    <tr class="danger">
+                      <th><b>attribure</b></th>
+                      <th><b>type</b></th>
+                      <th><b>discription</b></th>
+                    </tr>
+                    <tr>
+                      <td><b>available</b></td>
+                      <td>int</td>
+                      <td>The number of total available resources in this list</td>
+                    </tr>
+                    <tr>
+                      <td>returned</td>
+                      <td>int</td>
+                      <td>The number of resources returned in this resource list (up to 20).</td>
+                    </tr>
+                    <tr>
+                      <td>collectionURI</td>
+                      <td>string</td>
+                      <td>The path to the list of full view representations of the items in this resource list.</td>
+                    </tr>
+                    <tr>
+                      <td>items</td>
+                      <td>Array[entity summary representations]</td>
+                      <td>A list of summary views of the items in this resource list.</td>
+                    </tr>
+                  </table>
+                  </div>
+                  <p>Requests to the collectionURI will return full representations of the entities in the resource list. For example, the uri <b><a href="http://gateway.marvel.com/v1/public/creators/32">http://gateway.marvel.com/v1/public/creators/32</a></b> will return a representation of a particular creator. That creator representation will have an issues attribute which is a resource list of issues that he or she worked on. A call to the resource list's collection URI <b><a href="http://gateway.marvel.com/v1/public/creators/32/comics">http://gateway.marvel.com/v1/public/creators/32/comics</a></b> will return a set of full representations of comics, filtered by the creator with id of 32.</p>
+
+                <h3><b>Images</b></h3>
+                  <p>Images are represented as a partial path and an extension. See the guide to images for information about how to construct full paths to image files.</p>
+                  <div>
+                  <table class="table table-bordered table-condensed">
+                    <tr class="danger">
+                      <th><b>attribure</b></th>
+                      <th><b>type</b></th>
+                      <th><b>discription</b></th>
+                    </tr>
+                    <tr>
+                      <td>path</td>
+                      <td>string</td>
+                      <td>The directory path of to the image.</td>
+                    </tr>
+                    <tr>
+                      <td>extension</td>
+                      <td>string</td>
+                      <td>The file extension for the image.</td>
+                    </tr>
+                  </table>
+                  </div>
+                <h2><b>Core Entity Representations</b></h2>
+                  <h3><b>Characters:</b></h3>
+                    <div>
+                    <table class="table table-bordered table-condensed">
+                      <tr class="danger">
+                        <th><b>attribure</b></th>
+                        <th><b>type</b></th>
+                        <th><b>discription</b></th>
+                      </tr>
+                      <tr>
+                        <td>id</td>
+                        <td>int</td>
+                        <td>The unique ID of the character resource.</td>
+                      </tr>
+                      <tr>
+                        <td>name</td>
+                        <td>string</td>
+                        <td>The name of the character.</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td>A short bio or description of the character.</td>
+                      </tr>
+                      <tr>
+                        <td>modified</td>
+                        <td>Date</td>
+                        <td>The date the resource was most recently modified.</td>
+                      </tr>
+                      <tr>
+                        <td>resourceURI</td>
+                        <td>string</td>
+                        <td>The canonical URL identifier for this resource.</td>
+                      </tr>
+                      <tr>
+                        <td>urls</td>
+                        <td>Array[url]</td>
+                        <td>A set of public web site URLs for the resource.</td>
+                      </tr>
+                      <tr>
+                        <td>thumbnail</td>
+                        <td>Image</td>
+                        <td>A digest value of the content</td>
+                      </tr>
+                      <tr>
+                        <td>comics</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing comics which feature this character.</td>
+                      </tr>
+                      <tr>
+                        <td>copyright</td>
+                        <td>ResourceList</td>
+                        <td>A resource list of stories in which this character appears.</td>
+                      </tr>
+                      <tr>
+                        <td>attributionText</td>
+                        <td>ResourceList</td>
+                        <td>A resource list of events in which this character appears.</td>
+                      </tr>
+                      <tr>
+                        <td>attributionHTML</td>
+                        <td>ResourceList</td>
+                        <td>A resource list of series in which this character appears.</td>
+                      </tr>
+                    </table>
+                    </div>
+
+                  <h3><b>Comics:</b></h3>
+                    <div>
+                    <table class="table table-bordered table-condensed">
+                      <tr class="danger">
+                        <th><b>attribure</b></th>
+                        <th><b>type</b></th>
+                        <th><b>discription</b></th>
+                      </tr>
+                      <tr>
+                        <td>id</td>
+                        <td>int</td>
+                        <td>The unique ID of the comic resource.</td>
+                      </tr>
+                      <tr>
+                        <td>digitalId</td>
+                        <td>int</td>
+                        <td>The ID of the digital comic representation of this comic. Will be 0 if the comic is not available digitally.</td>
+                      </tr>
+                      <tr>
+                        <td>title</td>
+                        <td>string</td>
+                        <td>The canonical title of the comic.</td>
+                      </tr>
+                      <tr>
+                        <td>issueNumber</td>
+                        <td>int</td>
+                        <td>The number of the issue in the series (will generally be 0 for collection formats).</td>
+                      </tr>
+                      <tr>
+                        <td>variantDescription</td>
+                        <td>string</td>
+                        <td>If the issue is a variant (e.g. an alternate cover, second printing, or director's cut), a text description of the variant.</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td>The preferred description of the comic.</td>
+                      </tr>
+                      <tr>
+                        <td>modified</td>
+                        <td>Date</td>
+                        <td>The date the resource was most recently modified.</td>
+                      </tr>
+                      <tr>
+                        <td>isbn</td>
+                        <td>string</td>
+                        <td>The ISBN for the comic (generally only populated for collection formats).</td>
+                      </tr>
+                      <tr>
+                        <td>upc</td>
+                        <td>string</td>
+                        <td>The UPC barcode number for the comic (generally only populated for periodical formats).</td>
+                      </tr>
+                      <tr>
+                        <td>diamondCode</td>
+                        <td>string</td>
+                        <td>The Diamond code for the comic.</td>
+                      </tr>
+                      <tr>
+                        <td>ean</td>
+                        <td>string</td>
+                        <td>The EAN barcode for the comic.</td>
+                      </tr>
+                      <tr>
+                        <td>issn</td>
+                        <td>string</td>
+                        <td>The ISSN barcode for the comic.</td>
+                      </tr>
+                      <tr>
+                        <td>format</td>
+                        <td>string</td>
+                        <td>The publication format of the comic e.g. comic, hardcover, trade paperback.</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td>A short bio or description of the character.</td>
+                      </tr>
+                      <tr>
+                        <td>pageCount</td>
+                        <td>int</td>
+                        <td>The number of story pages in the comic.</td>
+                      </tr>
+                      <tr>
+                        <td>textObjects</td>
+                        <td>Array[TextObject]</td>
+                        <td>A set of descriptive text blurbs for the comic.</td>
+                      </tr>
+                      <tr>
+                        <td>resourceURI</td>
+                        <td>string</td>
+                        <td>The canonical URL identifier for this resource.</td>
+                      </tr>
+                      <tr>
+                        <td>urls</td>
+                        <td>Array[Url]</td>
+                        <td>A set of public web site URLs for the resource.</td>
+                      </tr>
+                      <tr>
+                        <td>series</td>
+                        <td>SeriesSummary</td>
+                        <td>A summary representation of the series to which this comic belongs.</td>
+                      </tr>
+                      <tr>
+                        <td>variants</td>
+                        <td>Array[ComicSummary]</td>
+                        <td>A list of variant issues for this comic (includes the "original" issue if the current issue is a variant).</td>
+                      </tr>
+                      <tr>
+                        <td>collections</td>
+                        <td>Array[ComicSummary]</td>
+                        <td>A list of collections which include this comic (will generally be empty if the comic's format is a collection).</td>
+                      </tr>
+                      <tr>
+                        <td>collectedIssues</td>
+                        <td>ResourceList</td>
+                        <td>A list of issues collected in this comic (will generally be empty for periodical formats such as "comic" or "magazine").</td>
+                      </tr>
+                      <tr>
+                        <td>dates</td>
+                        <td>Array[ComicDate]</td>
+                        <td>A list of key dates for this comic.</td>
+                      </tr>
+                      <tr>
+                        <td>prices</td>
+                        <td>Array[ComicPrice]</td>
+                        <td>A list of prices for this comic.</td>
+                      </tr>
+                      <tr>
+                        <td>thumbnail</td>
+                        <td>Image</td>
+                        <td>The representative image for this comic.</td>
+                      </tr>
+                      <tr>
+                        <td>images</td>
+                        <td>Array[Image]</td>
+                        <td>A list of promotional images associated with this comic.</td>
+                      </tr>
+                      <tr>
+                        <td>creators</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the creators associated with this comic.</td>
+                      </tr>
+                      <tr>
+                        <td>characters</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the characters which appear in this comic.</td>
+                      </tr>
+                      <tr>
+                        <td>stories</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the stories which appear in this comic.</td>
+                      </tr>
+                      <tr>
+                        <td>envents</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the events in which this comic appears.</td>
+                      </tr>
+                    </table>
+                    </div>
+
+                  <h3><b>Creators:</b></h3>
+                    <div>
+                    <table class="table table-bordered table-condensed">
+                      <tr class="danger">
+                        <th><b>attribure</b></th>
+                        <th><b>type</b></th>
+                        <th><b>discription</b></th>
+                      </tr>
+                      <tr>
+                        <td>id</td>
+                        <td>int</td>
+                        <td>The unique ID of the creator resource.</td>
+                      </tr>
+                      <tr>
+                        <td>firstName</td>
+                        <td>string</td>
+                        <td>The first name of the creator.</td>
+                      </tr>
+                      <tr>
+                        <td>middleName</td>
+                        <td>string</td>
+                        <td>The middle name of the creator.</td>
+                      </tr>
+                      <tr>
+                       <td>lastName</td>
+                        <td>string</td>
+                        <td>The last name of the creator.</td>
+                      </tr>
+                      <tr>
+                        <td>suffix</td>
+                        <td>string</td>
+                        <td>The suffix of the creator.</td>
+                      </tr>
+                      <tr>
+                        <td>fullName</td>
+                        <td>string</td>
+                        <td>The full name of the creator.</td>
+                      </tr>
+                      <tr>
+                        <td>modified</td>
+                        <td>Date</td>
+                        <td>The date the resource was most recently modified.</td>
+                      </tr>
+                      <tr>
+                        <td>resourceURI</td>
+                        <td>string</td>
+                        <td>The canonical URL identifier for this resource.</td>
+                      </tr>
+                      <tr>
+                        <td>urls</td>
+                        <td>Array[Url]</td>
+                        <td>A set of public web site URLs for the resource.</td>
+                      </tr>
+                      <tr>
+                        <td>thumbnail</td>
+                        <td>Image</td>
+                        <td>The representative image for this creator.</td>
+                      </tr>
+                      <tr>
+                        <td>series</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the series which feature work by this creator.</td>
+                      </tr>
+                      <tr>
+                        <td>stories</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the stories which feature work by this creator.</td>
+                      </tr>
+                      <tr>
+                        <td>comics</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the comics which feature work by this creator.</td>
+                      </tr>
+                      <tr>
+                        <td>envents</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the events which feature work by this creator.</td>
+                      </tr>
+                    </table>
+                    </div>
+
+                  <h3><b>Events:</b></h3>
+                    <div>
+                    <table class="table table-bordered table-condensed">
+                      <tr class="danger">
+                        <th><b>attribure</b></th>
+                        <th><b>type</b></th>
+                        <th><b>discription</b></th>
+                      </tr>
+                      <tr>
+                        <td>id</td>
+                        <td>int</td>
+                        <td>The unique ID of the creator resource.</td>
+                      </tr>
+                      <tr>
+                        <td>title</td>
+                        <td>string</td>
+                        <td>The title of the event.</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td>A description of the event.</td>
+                      </tr>
+                      <tr>
+                        <td>resourceURI</td>
+                        <td>string</td>
+                        <td>The canonical URL identifier for this resource.</td>
+                      </tr>
+                      <tr>
+                        <td>urls</td>
+                        <td>Array[Url]</td>
+                        <td>A set of public web site URLs for the resource.</td>
+                      </tr>
+                      <tr>
+                        <td>modified</td>
+                        <td>Date</td>
+                        <td>The date the resource was most recently modified.</td>
+                      </tr>
+                      <tr>
+                        <td>start</td>
+                        <td>int</td>
+                        <td>The date of publication of the first issue in this event.</td>
+                      </tr>
+                      <tr>
+                        <td>end</td>
+                        <td>int</td>
+                        <td>The date of publication of the last issue in this event.</td>
+                      </tr>
+                      <tr>
+                        <td>thumbnail</td>
+                        <td>Image</td>
+                        <td>The representative image for this event.</td>
+                      </tr>
+                      <tr>
+                        <td>comics</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the comics in this event.</td>
+                      </tr>
+                      <tr>
+                        <td>stories</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the stories in this event.</td>
+                      </tr>
+                      <tr>
+                        <td>series</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the series in this event.</td>
+                      </tr>
+                      <tr>
+                        <td>characters</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the characters which appear in this event.</td>
+                      </tr>
+                      <tr>
+                        <td>creators</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing creators whose work appears in this event.</td>
+                      </tr>
+                      <tr>
+                        <td>next</td>
+                        <td>SeriesSummary</td>
+                        <td>A summary representation of the event which follows this event.</td>
+                      </tr>
+                      <tr>
+                        <td>previous</td>
+                        <td>SeriesSummary</td>
+                        <td>A summary representation of the event which preceded this event.</td>
+                      </tr>
+                    </table>
+                    </div>
+                     
+                  <h3><b>Series:</b></h3>
+                    <div>
+                    <table class="table table-bordered table-condensed">
+                      <tr class="danger">
+                        <th><b>attribure</b></th>
+                        <th><b>type</b></th>
+                        <th><b>discription</b></th>
+                      </tr>
+                      <tr>
+                        <td>id</td>
+                        <td>int</td>
+                        <td>The unique ID of the creator resource.</td>
+                      </tr>
+                      <tr>
+                        <td>title</td>
+                        <td>string</td>
+                        <td>The title of the series.</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td>A description of the series.</td>
+                      </tr>
+                      <tr>
+                        <td>resourceURI</td>
+                        <td>string</td>
+                        <td>The canonical URL identifier for this resource.</td>
+                      </tr>
+                      <tr>
+                        <td>urls</td>
+                        <td>Array[Url]</td>
+                        <td>A set of public web site URLs for the resource.</td>
+                      </tr>
+                      <tr>
+                        <td>startYear</td>
+                        <td>int</td>
+                        <td>The first year of publication for the series.</td>
+                      </tr>
+                      <tr>
+                        <td>endYear</td>
+                        <td>int</td>
+                        <td>The last year of publication for the series (conventionally, 2099 for ongoing series).</td>
+                      </tr>
+                      <tr>
+                        <td>rating</td>
+                        <td>string</td>
+                        <td>The age-appropriateness rating for the series.</td>
+                      </tr>
+                      <tr>
+                        <td>modified</td>
+                        <td>Date</td>
+                        <td>The date the resource was most recently modified.</td>
+                      </tr>
+                      <tr>
+                        <td>thumbnail</td>
+                        <td>Image</td>
+                        <td>The representative image for this series.</td>
+                      </tr>
+                      <tr>
+                        <td>comics</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing the comics which feature work by this series.</td>
+                      </tr>
+                      <tr>
+                        <td>stories</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing stories which occur in comics in this series.</td>
+                      </tr>
+                      <tr>
+                        <td>envents</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing events which take place in comics in this series.</td>
+                      </tr>
+                      <tr>
+                        <td>characters</td>
+                        <td>ResourceList</td>
+                        <td>A resource list containing characters which appear in comics in this series.</td>
+                      </tr>
+                      <tr>
+                        <td>creators</td>
+                        <td>ResourceList</td>
+                        <td>A resource list of creators whose work appears in comics in this series.</td>
+                      </tr>
+                      <tr>
+                        <td>next</td>
+                        <td>SeriesSummary</td>
+                        <td>A summary representation of the series which follows this series.</td>
+                      </tr>
+                      <tr>
+                        <td>previous</td>
+                        <td>SeriesSummary</td>
+                        <td>A summary representation of the series which preceded this series.</td>
+                      </tr>
+                    </table>
+                    </div>
+
+                  <h3><b>Stories:</b></h3>
+                    <div>
+                    <table class="table table-bordered table-condensed">
+                      <tr class="danger">
+                        <th><b>attribure</b></th>
+                        <th><b>type</b></th>
+                        <th><b>discription</b></th>
+                      </tr>
+                      <tr>
+                        <td>id</td>
+                        <td>int</td>
+                        <td>The unique ID of the creator resource.</td>
+                      </tr>
+                      <tr>
+                        <td>title</td>
+                        <td>string</td>
+                        <td>The story title.</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td>A short description of the story.</td>
+                      </tr>
+                      <tr>
+                        <td>resourceURI</td>
+                        <td>string</td>
+                        <td>The canonical URL identifier for this resource.</td>
+                      </tr>
+                      <tr>
+                        <td>type</td>
+                        <td>string</td>
+                        <td>The story type e.g. interior story, cover, text story.</td>
+                      </tr>
+                      <tr>
+                        <td>modified</td>
+                        <td>Date</td>
+                        <td>The date the resource was most recently modified.</td>
+                      </tr>
+                      <tr>
+                        <td>thumbnail</td>
+                        <td>Image</td>
+                        <td>The representative image for this story.</td>
+                      </tr>
+                      <tr>
+                        <td>comics</td>
+                        <td>ComicList</td>
+                        <td>A resource list containing comics in which this story takes place.</td>
+                      </tr>
+                      <tr>
+                        <td>series</td>
+                        <td>SeriesList</td>
+                        <td>A resource list containing series in which this story appears.</td>
+                      </tr>
+                      <tr>
+                        <td>envents</td>
+                        <td>EventList</td>
+                        <td>A resource list of the events in which this story appears.</td>
+                      </tr>
+                      <tr>
+                        <td>characters</td>
+                        <td>ChareacterList</td>
+                        <td>A resource list of characters which appear in this story.</td>
+                      </tr>
+                      <tr>
+                        <td>creators</td>
+                        <td>CreatorList</td>
+                        <td>A resource list of creators who worked on this story.</td>
+                      </tr>
+                      <tr>
+                        <td>originalissue</td>
+                        <td>ComicSummary</td>
+                        <td>A summary representation of the issue in which this story was originally published.</td>
+                      </tr>
+                    </table>
+                    </div>
+
+             
+          <a class="btn btn-danger btn-lg" href="page1.html" role="button">< Previous</a>
+          <a class="btn btn-danger btn-lg" href="page3.html" role="button">Next Page ></a>
+        </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
+    <script>
+        window.jQuery || document.write('<script src="jquery.min.js"><\/script>')
+    </script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

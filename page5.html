@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Marvel API Gudie</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<style>
+  body {background-color: maroon;}
+</style>
+
+<body>
+
+  <div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="home.html">Home</a></li>
+          <li><a href="page1.html">General InFormation</a></li>
+          <li><a href="page2.html">API Results &amp Entity Types</a></li>
+          <li><a href="page3.html">Authorization</a></li>
+          <li><a href="page4.html">Attribution &amp Rate Limits</a></li>
+          <li><a href="page5.html">Images</a></li>
+        </ul>
+      </div>
+    </nav>
+        <div class="jumbotron">
+          <h1><b>Images</b></h1>
+            <p>Marvel comics are famous for their <b><a href="http://i.annihil.us/u/prod/marvel/i/mg/b/80/4bc37bb4ae105/detail.jpg">iconic images</a></b>, and we have provided a number of options for developers in order to optimally present images to your application's users. As always, <b><a href="https://developer.marvel.com/terms">consult the terms</a></b> of use and follow the attribution guidelines when displaying images in an application or website.</p>
+
+            <h2><b>Image Representations and Pathing</b></h2>
+              <p>The Marvel Comics API does not provide full paths to images. Instead, images are represented as a partial path to an image file and the canonical extension of that file. Developers may select from a set of image variants (predefined sizes and ratios) in order to best serve the presentation of their web site or application.</p>
+              <p>To build a full image path from an image representation</p>
+              <ol>
+                <li>Take the "path" element from the image representation</li>
+                <li>Append a variant name to the path element</li>
+                <li>Append the "extension" element to the variant name</li>
+              </ol>
+          
+            <p>For example, to display the image represented here:</p>
+              <img src="images/imgDis.png" class="img-rounded" width="1000" height="150">
+            
+            <p><ol>
+              <li>Take the path element: <b><a href="http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73">http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73</a></b></li>
+              <li>Select an image variant name (see the full list below) and append the variant name to the path element: <b><a href="http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge">http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge</a></b></li>
+              <li>Append the extension: <b><a href="http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge.jpg">http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge.jpg</a></b></li>
+              <li>In order to make your web site or application load and respond quickly and preserve end-user bandwidth, we recommend using the smallest-sized image necessary to meet the needs our user interface.</li>
+            </ol></p>
+          
+          <h2><b>Image Variants</b></h2>
+          <p>The following named image sizes and ratios are available for you use products leveraging the Marvel API. We add new image sizes from time to time, so please check this page in the future.</p>
+              <img src="images/images.png" width="1000" height="2000">
+          
+          <div>
+            <a class="btn btn-danger btn-lg" href="page4.html" role="button">< Previous</a>
+            <a class="btn btn-danger btn-lg" href="home.html" role="button"><< Back to Home</a>
+          </div>
+        </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
+    <script>
+        window.jQuery || document.write('<script src="jquery.min.js"><\/script>')
+    </script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

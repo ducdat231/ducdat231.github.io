@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Marvel API Gudie</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<style>
+  body {background-color: maroon;}
+</style>
+
+<body>
+
+  <div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="home.html">Home</a></li>
+          <li><a href="page1.html">General InFormation</a></li>
+          <li><a href="page2.html">API Results &amp Entity Types</a></li>
+          <li><a href="page3.html">Authorization</a></li>
+          <li><a href="page4.html">Attribution &amp Rate Limits</a></li>
+          <li><a href="page5.html">Images</a></li>
+        </ul>
+      </div>
+    </nav>
+        <div class="jumbotron">
+
+          <h1><b>General API Imformation</b></h1>
+          <p> The Marvel Comics API is a <b>RESTful</b> service which provides methods for accessing specific resources at canonical URLs and for searching and filtering sets of resources by various criteria. All representations are encoded as <b>JSON objects</b>.</p>
+
+            <h2><b>Service Endpoint</b></h2>
+            <p>The Marvel Comics API’s base endpoint is <b><a href="http(s)://gateway.marvel.com/">http(s)://gateway.marvel.com/</a></b>.</p>
+            
+            <h2><b>Resources</b></h2>
+            <p>You can access six resource types using the API:</p>
+            <ol>
+              <li>Comics: individual print and digital comic issues, collections and graphic novels. For example: <b><a href="http://marvel.com/comics/issue/16926/amazing_fantasy_1962_15">Amazing Fantasy (1962) #15</a></b>.</li>
+              <li>Comic series: sequentially numbered (well, mostly sequentially numbered) groups comics with the same title. For example: <b><a href="http://marvel.com/comics/series/2258/uncanny_x-men_1963_-_2011">UNCANNY X-MEN (1963 - 2011)</a></b>.</li>
+              <li>Comic stories: indivisible, reusable components of comics. For example, the cover from Amazing Fantasy #15 or the origin of Spider-Man story from that comic.</li>
+              <li>Comic events and crossovers: big, universe-altering storylines. For example: <b><a href="http://marvel.com/comics/events/315/infinity">Infinity</a></b>.</li>
+              <li>Creators: women, men and organizations who create comics. For example: <b><a href="http://marvel.com/comics/creators/196/kirby_jack">Jack Kirby</a></b>.</li>
+              <li>Characters: the women, men, organizations, alien species, deities, animals, non-corporeal entities, trans-dimensional manifestations, abstract personifications, and<b><a href="http://http://marvel.com/universe/Doop"> green amorphous blobs</a></b> which occupy the Marvel Universe (and various alternate universes, timelines and altered realities therein). For example: <b><a href="http://marvel.com/characters/54/spider-man"> Spider Man</a></b>.</li>
+            </ol>
+
+            <h2><b>Authentication</b></h2>
+            <p>All requests to the APIs must be authenticated using the methods outlined in the <b>request signing and authentication guidelines</b>. Requests which fail authentication generally pass a 401 HTTP code and an error describing the reason for rejection.</p>
+
+            <h2><b>Machine-Readable Documentation</b>b></h2>
+            <p>All API endpoints are documented as machine-readable representations using the <b>swagger-doc specification</b>. These representations are available at <b><a href="http://gateway.marvel.com/docs"> http://gateway.marvel.com/docs</a></b>.</p>
+
+            <h2><b>Some odds and ends with requests</b></h2>
+              <h3><b>HTTP Verbs</b></h3>
+              <P>All endpoints currently accept only HTTP GET requests.</P>
+
+              <h3><b>ETags</b></h3>
+              <p>Most successful results will contain an “etag” attribute and ETag HTTP header with a digest of the returned content. In order to save bandwidth and make your application more performant, you may optionally pass an “if-none-match” HTTP header with that digest for subsequent requests to the same URL. If the content has not changed since the last request, the response code will return with an empty body and a 304/Not Modified HTTP header and you can use a previously-stored value for the content.</p>
+              <p><b>Note:</b> Most browsers will do this automatically, but you may need to manually add this logic to server-side applications.</p>
+
+                <h4><i><b>Example: </b></i></h4>
+                <p>Initial request:</p>
+                  <img src="images/initialReq.png" class="img-rounded" width="1000" height="220">
+                <p>Initial response:</p>
+                  <img src="images/initialRes.png" class="img-rounded" width="1000" height="200">                
+                <p>Subsequent request:</p>
+                  <img src="images/subReq.png" class="img-rounded" width="1000" height="280">                
+                <p>Subsequent response:</p>
+                  <img src="images/subRes.png" class="img-rounded" width="1000" height="180">
+
+              <h3><b>Cross-origin requests and JSONP</b></h3>
+              <p>Responses returned by the Marvel Comics API are compliant with the W3C <b>CORS</b> specification, which allows any properly-authorized requests to be made from any origin domain. This means that you should <b>not</b> need to wrap calls in JSONP callbacks in order to make calls from browser-based applications. If you do prefer to use JSONP, however, all endpoints will accept a callback parameter to all endpoints that will wrap results in a JSONP wrapper.</p>
+                <h4><i><b>Example: </b></i></h4>
+                <p>Without a callback:</p>
+                  <img src="images/withoutCall.png" class="img-rounded" width="1000" height="250">                
+                <p>With a callback:</p>
+                  <img src="images/withCall.png" class="img-rounded" width="1000" height="280">
+              
+              <h3><b>GZIP Compression</b></h3>
+              <p>In order to save bandwidth and make your application more performant, the Marvel Comics API can compress responses with GZIP. You may request a GZIP-ed response by passing an <b>Accept-Encoding</b> header to any endpoint.</p>
+                 <h4><i><b>Example: </b></i></h4>
+                 <p>Request:</p>
+                  <img src="images/req.png" class="img-rounded" width="1000" height="300">                 
+                <p>Response:</p>
+                  <img src="images/res.png" class="img-rounded" width="1000" height="200">          
+
+          <p> 
+            <a class="btn btn-danger btn-lg" href="home.html" role="button">< Previous</a>
+            <a class="btn btn-danger btn-lg" href="page2.html" role="button">Next Page ></a>
+          </p>
+        </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
+    <script>
+        window.jQuery || document.write('<script src="jquery.min.js"><\/script>')
+    </script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

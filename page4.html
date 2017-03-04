@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Marvel API Gudie</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<style>
+  body {background-color: maroon;}
+</style>
+
+<body>
+
+  <div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="home.html">Home</a></li>
+          <li><a href="page1.html">General InFormation</a></li>
+          <li><a href="page2.html">API Results &amp Entity Types</a></li>
+          <li><a href="page3.html">Authorization</a></li>
+          <li><a href="page4.html">Attribution &amp Rate Limits</a></li>
+          <li><a href="page5.html">Images</a></li>
+        </ul>
+      </div>
+    </nav>
+        <div class="jumbotron">
+        <h1><b>Attribution, Linking and Rate Limits</b></h1>
+          <p> On this page we'll discuss some specific rules of the road that you'll need to follow when accessing and displaying data from the Marvel Comics API on your web site or application. These rules of the road basically boil down to:</p>
+          <ol>
+              <li>Understand your rate limit.</li>
+              <li>Attribute Marvel as the source when displaying API data.</li>
+              <li>Link to Marvel when you display large images.</li>
+          </ol>
+
+            <h2><b>Rate Limits</b></h2>
+              <p>You will only be able to call most services a certain number of times within a particular time period (calculated on a rolling basis). Most services default to 1000 calls per day but some services may have different rate limits. You can view your particular rate limits on your <b><a href="https://marvel.com/signin">developer account page</a></b>. If you attempt to make more API calls to a service than your allotted amount, the call will be rejected by the Marvel Comics API. A call rejected for exceeding a rate limit will return an HTTP status code of 429 and an error message indicating that your rate limit has been surpassed.</p>
+              <p><b>Note:</b> Rejected calls still count against your limit, so if you do exceed your allotted call volume, please stop making requests until you are back in compliance with your personal rate limit</p>
+              <p>If you have questions about your rate limit, please <b><a href="https://developer.marvel.com/help">contact us</a></b> using the help form.</p>
+            
+              <h3><b>Tips for staying within rate limits:</b></h3>
+                <p>Here's some best-practices to help reduce the number of requests you make to the Marvel Comics API and to help keep you within your rate limit.</p>
+                <ol>
+                  <li><b>Cache results.</b> You may <b>not</b> cache results indefinitely (and our data does change on a regular basis so caching for long periods of time will make your results out of date), but caching API call results for limited amounts of time is OK. Caching calls for 24 hours is usually a good amount.</li>
+                  <li><b>Only</b> make the calls you need.Only make calls that are necessary to display information pertinent to your application. Don't pre-load information your users haven't asked for.</li>
+                </ol>
+
+            <h2><b>Linking to Marvel</b></h2>
+              <p>Linking from your application and web pages to Marvel helps us understand how applications are being used by end-users, which applications are most successful, and which presentations of Marvel content is most impactful, all of which helps us improve our API products.</p>
+              <p>You must link to Marvel whenever you show any information from the API beyond the title and small (100px width or smaller) thumbnail of an entity. For example, displaying a set of comics with only the title and small thumbnail would require only the attribution language above. If that same set were displayed with any additional information, each comic would need to have a link back to one or more of the URLs associated with that comic.</p>
+
+            <h2><b>Attribution</b></h2>
+              <p>You must attribute Marvel as the source of data whenever you display any results from the Marvel Comics API. Please use the following text on every application screen or web page which displays the API result:</p>
+              <p><b>"Data provided by Marvel. © 2014 Marvel"</b></p>
+
+            <h2><b>Links from URL arrays</b></h2>
+              <p>Most entities return URL arrays, which are one or more public URLs associated with an entity. For example, a comic may have a URL array that contains a link to its detail page on Marvel.com, a link to purchase it on the web, and a link to the Marvel digital comics reader for that comic.</p>
+              <p>If a URL array is present for an entity, please use one of the links provided when linking back to Marvel. Feel free to use any of the URLs present, whichever makes most sense for your application. (URL block links are automatically tagged with your API key so that we can properly credit your web site or application with any traffic driven from your link.)</p>
+
+
+            <h2><b>Linking back when no URL array is present</b></h2>
+              <p>If a URL array is not present for an entity simply link to the Marvel.com home page <b><a href="http://marvel.com">(http://marvel.com)</a></b> in your attribution notice.</p>
+
+          <a class="btn btn-danger btn-lg" href="page3.html" role="button">< Previous</a>
+          <a class="btn btn-danger btn-lg" href="page5.html" role="button">Last Page ></a>
+        </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
+    <script>
+        window.jQuery || document.write('<script src="jquery.min.js"><\/script>')
+    </script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
